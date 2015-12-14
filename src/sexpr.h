@@ -1,9 +1,12 @@
+#ifndef SEXPR_H_
+#define SEXPR_H_
+
 #include <string>
 #include <vector>
 
 namespace SEXPR
 {
-	enum SEXPR_TYPE
+	enum class SEXPR_TYPE
 	{
 		LIST,
 		ATOM_INTEGER,
@@ -35,30 +38,32 @@ namespace SEXPR
 	struct SEXPR_INTEGER : public SEXPR
 	{
 		long long int m_value;
-		SEXPR_INTEGER(long long int value) : SEXPR(ATOM_INTEGER), m_value(value) {};
+		SEXPR_INTEGER(long long int value) : SEXPR(SEXPR_TYPE::ATOM_INTEGER), m_value(value) {};
 	};
 
 	struct SEXPR_DOUBLE : public SEXPR
 	{
 		double m_value;
-		SEXPR_DOUBLE(double value) : SEXPR(ATOM_DOUBLE), m_value(value) {};
+		SEXPR_DOUBLE(double value) : SEXPR(SEXPR_TYPE::ATOM_DOUBLE), m_value(value) {};
 	};
 
 	struct SEXPR_STRING : public SEXPR
 	{
 		std::string m_value;
-		SEXPR_STRING(std::string value) : SEXPR(ATOM_STRING), m_value(value) {};
+		SEXPR_STRING(std::string value) : SEXPR(SEXPR_TYPE::ATOM_STRING), m_value(value) {};
 	};
 
 	struct SEXPR_SYMBOL : public SEXPR
 	{
 		std::string m_value;
-		SEXPR_SYMBOL(std::string value) : SEXPR(ATOM_SYMBOL), m_value(value) {};
+		SEXPR_SYMBOL(std::string value) : SEXPR(SEXPR_TYPE::ATOM_SYMBOL), m_value(value) {};
 	};
 
 	struct SEXPR_LIST : SEXPR
 	{
 		SEXPR_VECTOR m_children;;
-		SEXPR_LIST() : SEXPR(LIST) {};
+		SEXPR_LIST() : SEXPR(SEXPR_TYPE::LIST) {};
 	};
 }
+
+#endif
