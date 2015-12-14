@@ -14,7 +14,7 @@ namespace SEXPR
 
 	SEXPR_VECTOR const * SEXPR::GetChildren() const
 	{
-		if (m_type != SEXPR_TYPE::LIST)
+		if (m_type != SEXPR_TYPE_LIST)
 		{
 			throw new std::invalid_argument("SEXPR is not a list type!");
 		}
@@ -24,7 +24,7 @@ namespace SEXPR
 	
 	SEXPR* SEXPR::GetChild(size_t idx) const 
 	{
-		if (m_type != SEXPR_TYPE::LIST)
+		if (m_type != SEXPR_TYPE_LIST)
 		{
 			throw new std::invalid_argument("SEXPR is not a list type!");
 		}
@@ -34,7 +34,7 @@ namespace SEXPR
 
 	void SEXPR::AddChild(SEXPR* child)
 	{
-		if (m_type != SEXPR_TYPE::LIST)
+		if (m_type != SEXPR_TYPE_LIST)
 		{
 			throw new std::invalid_argument("SEXPR is not a list type!");
 		}
@@ -46,7 +46,7 @@ namespace SEXPR
 
 	std::string const & SEXPR::GetString() const
 	{
-		if (m_type != SEXPR_TYPE::ATOM_STRING)
+		if (m_type != SEXPR_TYPE_ATOM_STRING)
 		{
 			throw new std::invalid_argument("SEXPR is not a string type!");
 		}
@@ -56,7 +56,7 @@ namespace SEXPR
 
 	long long int SEXPR::GetInteger() const
 	{
-		if (m_type != SEXPR_TYPE::ATOM_INTEGER)
+		if (m_type != SEXPR_TYPE_ATOM_INTEGER)
 		{
 			throw new std::invalid_argument("SEXPR is not a integer type!");
 		}
@@ -66,7 +66,7 @@ namespace SEXPR
 
 	double SEXPR::GetDouble() const
 	{
-		if (m_type != SEXPR_TYPE::ATOM_DOUBLE)
+		if (m_type != SEXPR_TYPE_ATOM_DOUBLE)
 		{
 			throw new std::invalid_argument("SEXPR is not a double type!");
 		}
@@ -76,7 +76,7 @@ namespace SEXPR
 
 	std::string const & SEXPR::GetSymbol() const
 	{
-		if (m_type != SEXPR_TYPE::ATOM_SYMBOL)
+		if (m_type != SEXPR_TYPE_ATOM_SYMBOL)
 		{
 			throw new std::invalid_argument("SEXPR is not a symbol type!");
 		}
@@ -88,7 +88,7 @@ namespace SEXPR
 	{
 		std::string result;
 
-		if (m_type == SEXPR_TYPE::LIST)
+		if (IsList())
 		{
 			result += "(";
 
@@ -106,21 +106,21 @@ namespace SEXPR
 
 			return result;
 		}
-		else if (m_type == SEXPR_TYPE::ATOM_STRING)
+		else if (IsString())
 		{
 			return "\"" + GetString() + "\"";
 		}
-		else if (m_type == SEXPR_TYPE::ATOM_SYMBOL)
+		else if (IsSymbol())
 		{
 			return GetSymbol();
 		}
-		else if (m_type == SEXPR_TYPE::ATOM_INTEGER)
+		else if (IsInteger())
 		{
 			std::stringstream out;
 			out << GetInteger();
 			return out.str();
 		}
-		else if (m_type == SEXPR_TYPE::ATOM_DOUBLE)
+		else if (IsDouble())
 		{
 			std::stringstream out;
 			out << GetDouble();
