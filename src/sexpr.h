@@ -21,8 +21,10 @@ namespace SEXPR
 	{
 	protected:
 		SEXPR_TYPE m_type;
-		SEXPR(SEXPR_TYPE type);
+		SEXPR(SEXPR_TYPE type, int lineNumber);
+
 	public:
+		int m_lineNumber;
 		bool IsList() const { return m_type == SEXPR_TYPE_LIST; }
 		bool IsSymbol() const { return m_type == SEXPR_TYPE_ATOM_SYMBOL; }
 		bool IsString() const { return m_type == SEXPR_TYPE_ATOM_STRING; }
@@ -42,31 +44,31 @@ namespace SEXPR
 	struct SEXPR_INTEGER : public SEXPR
 	{
 		long long int m_value;
-		SEXPR_INTEGER(long long int value) : SEXPR(SEXPR_TYPE_ATOM_INTEGER), m_value(value) {};
+		SEXPR_INTEGER(long long int value, int lineNumber) : SEXPR(SEXPR_TYPE_ATOM_INTEGER, lineNumber), m_value(value) {};
 	};
 
 	struct SEXPR_DOUBLE : public SEXPR
 	{
 		double m_value;
-		SEXPR_DOUBLE(double value) : SEXPR(SEXPR_TYPE_ATOM_DOUBLE), m_value(value) {};
+		SEXPR_DOUBLE(double value, int lineNumber) : SEXPR(SEXPR_TYPE_ATOM_DOUBLE, lineNumber), m_value(value) {};
 	};
 
 	struct SEXPR_STRING : public SEXPR
 	{
 		std::string m_value;
-		SEXPR_STRING(std::string value) : SEXPR(SEXPR_TYPE_ATOM_STRING), m_value(value) {};
+		SEXPR_STRING(std::string value, int lineNumber) : SEXPR(SEXPR_TYPE_ATOM_STRING, lineNumber), m_value(value) {};
 	};
 
 	struct SEXPR_SYMBOL : public SEXPR
 	{
 		std::string m_value;
-		SEXPR_SYMBOL(std::string value) : SEXPR(SEXPR_TYPE_ATOM_SYMBOL), m_value(value) {};
+		SEXPR_SYMBOL(std::string value, int lineNumber) : SEXPR(SEXPR_TYPE_ATOM_SYMBOL, lineNumber), m_value(value) {};
 	};
 
 	struct SEXPR_LIST : SEXPR
 	{
 		SEXPR_VECTOR m_children;;
-		SEXPR_LIST() : SEXPR(SEXPR_TYPE_LIST) {};
+		SEXPR_LIST(int lineNumber) : SEXPR(SEXPR_TYPE_LIST, lineNumber) {};
 	};
 }
 

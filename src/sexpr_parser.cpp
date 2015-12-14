@@ -29,6 +29,12 @@ namespace SEXPR
 	{
 		for (; it != aString.end(); ++it)
 		{
+			if (*it == '\n')
+			{
+				m_lineNumber++;
+				m_lineOffset = 0;
+			}
+
 			if (whitespaceCharacters.find(*it) != std::string::npos)
 				continue;
 
@@ -36,7 +42,7 @@ namespace SEXPR
 			{
 				std::advance(it, 1);
 
-				SEXPR_LIST* list = new SEXPR_LIST();
+				SEXPR_LIST* list = new SEXPR_LIST(m_lineNumber);
 				while (it != aString.end() && *it != ')')
 				{
 					SEXPR* item = ParseString(aString, it);
@@ -57,7 +63,7 @@ namespace SEXPR
 
 				if (closingPos != std::string::npos)
 				{
-					SEXPR_STRING* str = new SEXPR_STRING(aString.substr(startPos, closingPos - startPos));
+					SEXPR_STRING* str = new SEXPR_STRING(aString.substr(startPos, closingPos - startPos),m_lineNumber);
 					std::advance(it, closingPos - startPos + 2);
 
 					return str;
@@ -79,12 +85,12 @@ namespace SEXPR
 				SEXPR* res;
 				if (tmp.find('.') != std::string::npos)
 				{
-					res = new SEXPR_DOUBLE(strtod(tmp.c_str(), NULL));
+					res = new SEXPR_DOUBLE(strtod(tmp.c_str(), NULL), m_lineNumber);
 					//floating point type
 				}
 				else
 				{
-					res = new SEXPR_INTEGER(strtoll(tmp.c_str(), NULL, 0));
+					res = new SEXPR_INTEGER(strtoll(tmp.c_str(), NULL, 0), m_lineNumber);
 				}
 				std::advance(it, closingPos - startPos);
 
@@ -97,7 +103,7 @@ namespace SEXPR
 
 				if (closingPos != std::string::npos)
 				{
-					SEXPR_SYMBOL* str = new SEXPR_SYMBOL(aString.substr(startPos, closingPos - startPos));
+					SEXPR_SYMBOL* str = new SEXPR_SYMBOL(aString.substr(startPos, closingPos - startPos), m_lineNumber);
 					std::advance(it, closingPos - startPos + 1);
 
 					return str;
