@@ -9,7 +9,7 @@
 namespace SEXPR
 {
 	const std::string PARSER::whitespaceCharacters = " \t\n\r\b\f\v";
-	const std::string PARSER::extraSymbolCharacters = "!@#:\\/";
+	const std::string PARSER::extraSymbolCharacters = "!@#:\\/_-";
 
 	PARSER::PARSER()
 	{
