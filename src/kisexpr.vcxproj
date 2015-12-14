@@ -143,12 +143,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="PARSER.cpp" />
-    <ClCompile Include="SEXPR.cpp" />
+    <ClCompile Include="sexpr.cpp" />
+    <ClCompile Include="sexpr_parser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PARSER.h" />
-    <ClInclude Include="SEXPR.h" />
+    <ClInclude Include="sexpr.h" />
+    <ClInclude Include="sexpr_parser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

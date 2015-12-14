@@ -18,18 +18,18 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SEXPR.cpp">
+    <ClCompile Include="sexpr_parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PARSER.cpp">
+    <ClCompile Include="sexpr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PARSER.h">
+    <ClInclude Include="sexpr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SEXPR.h">
+    <ClInclude Include="sexpr_parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

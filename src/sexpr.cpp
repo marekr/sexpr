@@ -1,5 +1,5 @@
 
-#include "SEXPR.h"
+#include "sexpr.h"
 #include <cctype>
 #include <iterator>
 #include <stdexcept>

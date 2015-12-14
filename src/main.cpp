@@ -1,5 +1,5 @@
-#include "SEXPR.h"
-#include "PARSER.h"
+#include "sexpr.h"
+#include "sexpr_parser.h"
 
 
 int main(void)
