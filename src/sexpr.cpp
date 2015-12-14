@@ -44,6 +44,16 @@ namespace SEXPR
 		list->m_children.push_back(child);
 	}
 
+	size_t SEXPR::GetNumberOfChildren() const
+	{
+		if (m_type != SEXPR_TYPE_LIST)
+		{
+			throw new std::invalid_argument("SEXPR is not a list type!");
+		}
+
+		return static_cast<SEXPR_LIST const *>(this)->m_children.size();
+	}
+
 	std::string const & SEXPR::GetString() const
 	{
 		if (m_type != SEXPR_TYPE_ATOM_STRING)

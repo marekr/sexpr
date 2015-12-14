@@ -31,6 +31,7 @@ namespace SEXPR
 		void AddChild(SEXPR* child);
 		SEXPR_VECTOR const * GetChildren() const;
 		SEXPR * GetChild(size_t idx) const;
+		size_t GetNumberOfChildren() const;
 		long long int GetInteger() const;
 		double GetDouble() const;
 		std::string const & GetString() const;
