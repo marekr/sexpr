@@ -11,7 +11,7 @@ namespace SEXPR
 	const std::string PARSER::whitespaceCharacters = " \t\n\r\b\f\v";
 	const std::string PARSER::extraSymbolCharacters = "!@#:\\/_-";
 
-	PARSER::PARSER()
+	PARSER::PARSER() : m_lineNumber(0), m_lineOffset(0)
 	{
 	}
 
@@ -29,6 +29,9 @@ namespace SEXPR
 	{
 		for (; it != aString.end(); ++it)
 		{
+			if (whitespaceCharacters.find(*it) != std::string::npos)
+				continue;
+
 			if (*it == '(')
 			{
 				std::advance(it, 1);

@@ -18,6 +18,8 @@ namespace SEXPR
 		static const std::string whitespaceCharacters;
 		static const std::string extraSymbolCharacters;
 		bool isSymbolCharacter(int ch);
+		int m_lineNumber;
+		int m_lineOffset;
 	};
 }
 
