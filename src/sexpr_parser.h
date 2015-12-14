@@ -12,7 +12,7 @@ namespace SEXPR
 	public:
 		PARSER();
 		~PARSER();
-		SEXPR* Parse(std::string &aString);
+		SEXPR* Parse(const std::string &aString);
 		SEXPR* ParseString(const std::string& aString, std::string::const_iterator& it);
 	private:
 		static const std::string whitespaceCharacters;

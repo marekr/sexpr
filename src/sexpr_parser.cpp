@@ -19,9 +19,10 @@ namespace SEXPR
 	{
 	}
 
-	SEXPR* PARSER::Parse(std::string &aString)
+	SEXPR* PARSER::Parse(const std::string &aString) 
 	{
-		return ParseString(aString, aString.begin());
+		std::string::const_iterator it = aString.begin();
+		return ParseString(aString, it);
 	}
 
 	SEXPR* PARSER::ParseString(const std::string& aString, std::string::const_iterator& it)
