@@ -1,11 +1,14 @@
 #include "sexpr.h"
 #include "sexpr_parser.h"
 
+#include <fstream>
+#include <streambuf>
 
 int main(void)
 {
 	SEXPR::PARSER parser;
 
+#if 0
 	std::string data = "((data \"quoted data\" 123 -4.5)(data(!@# (4.5) \"(more\" \"data)\")))";
 	SEXPR::SEXPR* result = parser.Parse(data);
 
@@ -78,6 +81,20 @@ int main(void)
 			}
 		}
 	}
+#endif
+	std::ifstream t("C:\\Users\\mroszko\\AppData\\Roaming\\kicad\\fp-lib-table");
+	std::string str;
+
+	// Faster than automatic allocation
+	t.seekg(0, std::ios::end);
+	str.reserve(t.tellg());
+	t.seekg(0, std::ios::beg);
+
+	str.assign((std::istreambuf_iterator<char>(t)),
+		std::istreambuf_iterator<char>());
+
+	SEXPR::SEXPR* result3 = parser.Parse(str);
+	std::string test3 = result3->AsString();
 
 	return 0;
 }
