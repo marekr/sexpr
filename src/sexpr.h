@@ -38,7 +38,7 @@ namespace SEXPR
 		double GetDouble() const;
 		std::string const & GetString() const;
 		std::string const & GetSymbol() const;
-		std::string AsString();
+		std::string AsString(size_t level = 0);
 	};
 
 	struct SEXPR_INTEGER : public SEXPR

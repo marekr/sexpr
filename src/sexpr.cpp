@@ -94,19 +94,25 @@ namespace SEXPR
 		return static_cast<SEXPR_SYMBOL const *>(this)->m_value;
 	}
 
-	std::string SEXPR::AsString()
+	std::string SEXPR::AsString(size_t level)
 	{
 		std::string result;
 
 		if (IsList())
 		{
+			if (level != 0)
+			{
+				result = "\n";
+			}
+			result.append(level * 4, ' ');
+			level++;
 			result += "(";
 
 			SEXPR_VECTOR const* list = GetChildren();
 
 			for (std::vector<SEXPR *>::const_iterator it = list->begin(); it != list->end(); ++it)
 			{
-				result += (*it)->AsString();
+				result += (*it)->AsString(level);
 				if (it != list->end()-1)
 				{
 					result += " ";
@@ -114,32 +120,30 @@ namespace SEXPR
 			}
 			result += ")";
 
-			return result;
+			level--;
 		}
 		else if (IsString())
 		{
-			return "\"" + GetString() + "\"";
+			result += "\"" + GetString() + "\"";
 		}
 		else if (IsSymbol())
 		{
-			return GetSymbol();
+			result += GetSymbol();
 		}
 		else if (IsInteger())
 		{
 			std::stringstream out;
 			out << GetInteger();
-			return out.str();
+			result += out.str();
 		}
 		else if (IsDouble())
 		{
 			std::stringstream out;
 			out << GetDouble();
-			return out.str();
+			result += out.str();
 		}
-		else
-		{
-			return result;
-		}
+
+		return result;
 	}
 }
 
