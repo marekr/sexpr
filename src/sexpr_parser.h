@@ -13,8 +13,9 @@ namespace SEXPR
 		PARSER();
 		~PARSER();
 		SEXPR* Parse(const std::string &aString);
-		SEXPR* ParseString(const std::string& aString, std::string::const_iterator& it);
+		SEXPR* ParseFromFile(const std::string &filename);
 	private:
+		SEXPR* parseString(const std::string& aString, std::string::const_iterator& it);
 		static const std::string whitespaceCharacters;
 		static const std::string extraSymbolCharacters;
 		bool isSymbolCharacter(int ch);

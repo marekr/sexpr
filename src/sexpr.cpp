@@ -7,7 +7,7 @@
 
 namespace SEXPR
 {
-	SEXPR::SEXPR(SEXPR_TYPE type, int lineNumber) :
+	SEXPR::SEXPR(SEXPR_TYPE type, size_t lineNumber) :
 		m_type(type), m_lineNumber(lineNumber)
 	{
 	}

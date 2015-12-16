@@ -6,6 +6,9 @@
 #include <stdexcept>
 #include <stdlib.h>     /* strtod */
 
+#include <fstream>
+#include <streambuf>
+
 namespace SEXPR
 {
 	const std::string PARSER::whitespaceCharacters = " \t\n\r\b\f\v";
@@ -22,10 +25,27 @@ namespace SEXPR
 	SEXPR* PARSER::Parse(const std::string &aString) 
 	{
 		std::string::const_iterator it = aString.begin();
-		return ParseString(aString, it);
+		return parseString(aString, it);
 	}
 
-	SEXPR* PARSER::ParseString(const std::string& aString, std::string::const_iterator& it)
+	SEXPR* PARSER::ParseFromFile(const std::string &aFileName)
+	{
+		std::ifstream t(aFileName, std::ios::binary);
+		std::string str;
+
+		// Faster than automatic allocation
+		t.seekg(0, std::ios::end);
+		str.reserve(t.tellg());
+		t.seekg(0, std::ios::beg);
+
+		str.assign((std::istreambuf_iterator<char>(t)),
+		std::istreambuf_iterator<char>());
+
+		std::string::const_iterator it = str.begin();
+		return parseString(str, it);
+	}
+
+	SEXPR* PARSER::parseString(const std::string& aString, std::string::const_iterator& it)
 	{
 		for (; it != aString.end(); ++it)
 		{
@@ -51,7 +71,7 @@ namespace SEXPR
 						continue;
 					}
 
-					SEXPR* item = ParseString(aString, it);
+					SEXPR* item = parseString(aString, it);
 					list->AddChild(item);
 				}
 

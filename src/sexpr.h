@@ -21,10 +21,10 @@ namespace SEXPR
 	{
 	protected:
 		SEXPR_TYPE m_type;
-		SEXPR(SEXPR_TYPE type, int lineNumber);
+		SEXPR(SEXPR_TYPE type, size_t lineNumber);
+		size_t m_lineNumber;
 
 	public:
-		int m_lineNumber;
 		bool IsList() const { return m_type == SEXPR_TYPE_LIST; }
 		bool IsSymbol() const { return m_type == SEXPR_TYPE_ATOM_SYMBOL; }
 		bool IsString() const { return m_type == SEXPR_TYPE_ATOM_STRING; }
@@ -39,6 +39,7 @@ namespace SEXPR
 		std::string const & GetString() const;
 		std::string const & GetSymbol() const;
 		std::string AsString(size_t level = 0);
+		size_t GetLineNumber() { return m_lineNumber; }
 	};
 
 	struct SEXPR_INTEGER : public SEXPR

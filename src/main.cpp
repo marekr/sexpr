@@ -1,8 +1,6 @@
 #include "sexpr.h"
 #include "sexpr_parser.h"
 
-#include <fstream>
-#include <streambuf>
 
 int main(void)
 {
@@ -82,18 +80,8 @@ int main(void)
 		}
 	}
 #endif
-	std::ifstream t("C:\\Users\\mroszko\\AppData\\Roaming\\kicad\\fp-lib-table");
-	std::string str;
 
-	// Faster than automatic allocation
-	t.seekg(0, std::ios::end);
-	str.reserve(t.tellg());
-	t.seekg(0, std::ios::beg);
-
-	str.assign((std::istreambuf_iterator<char>(t)),
-		std::istreambuf_iterator<char>());
-
-	SEXPR::SEXPR* result3 = parser.Parse(str);
+	SEXPR::SEXPR* result3 = parser.ParseFromFile("C:\\Users\\mroszko\\AppData\\Roaming\\kicad\\fp-lib-table");
 	std::string test3 = result3->AsString();
 
 	return 0;
