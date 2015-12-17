@@ -12,7 +12,6 @@
 namespace SEXPR
 {
 	const std::string PARSER::whitespaceCharacters = " \t\n\r\b\f\v";
-	const std::string PARSER::extraSymbolCharacters = "!@#:\\/_-${}.";
 
 	PARSER::PARSER() : m_lineNumber(0), m_lineOffset(0)
 	{
@@ -103,7 +102,7 @@ namespace SEXPR
 					throw std::invalid_argument("missing closing quote");
 				}
 			}
-			else if (isSymbolCharacter(*it))
+			else
 			{
 				size_t startPos = std::distance(aString.begin(), it);
 				size_t closingPos = aString.find_first_of(whitespaceCharacters+"()", startPos);
@@ -144,15 +143,6 @@ namespace SEXPR
 				}
 			}
 		}
-	}
-
-
-	bool PARSER::isSymbolCharacter(int ch)
-	{
-		if (std::isalnum(ch))
-			return true;
-
-		return extraSymbolCharacters.find(ch) != std::string::npos;
 	}
 }
 
