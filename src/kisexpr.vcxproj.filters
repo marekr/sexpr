@@ -32,5 +32,8 @@
     <ClInclude Include="sexpr_parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sexpr_exception.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 
 #include "sexpr.h"
 #include "sexpr_parser.h"
+#include "sexpr_exception.h"
 #include <cctype>
 #include <iterator>
 #include <stdexcept>
@@ -99,7 +100,7 @@ namespace SEXPR
 				}
 				else
 				{
-					throw std::invalid_argument("missing closing quote");
+					throw PARSE_EXCEPTION("missing closing quote");
 				}
 			}
 			else
@@ -139,7 +140,7 @@ namespace SEXPR
 				}
 				else
 				{
-					throw std::invalid_argument("format error");
+					throw PARSE_EXCEPTION("format error");
 				}
 			}
 		}

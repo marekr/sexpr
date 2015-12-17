@@ -149,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sexpr.h" />
+    <ClInclude Include="sexpr_exception.h" />
     <ClInclude Include="sexpr_parser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
