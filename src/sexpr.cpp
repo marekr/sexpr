@@ -12,6 +12,11 @@ namespace SEXPR
 	{
 	}
 
+	SEXPR::SEXPR(SEXPR_TYPE type) :
+		m_type(type), m_lineNumber(0)
+	{
+	}
+
 	SEXPR_VECTOR const * SEXPR::GetChildren() const
 	{
 		if (m_type != SEXPR_TYPE_LIST)
@@ -144,6 +149,46 @@ namespace SEXPR
 		}
 
 		return result;
+	}
+
+	SEXPR_LIST& operator<< (SEXPR_LIST& list, long value)
+	{
+		list.AddChild(new SEXPR_INTEGER(value));
+		return list;
+	}
+
+	SEXPR_LIST& operator<< (SEXPR_LIST& list, int value)
+	{
+		list.AddChild(new SEXPR_INTEGER(value));
+		return list;
+	}
+
+	SEXPR_LIST& operator<< (SEXPR_LIST& list, float value)
+	{
+		list.AddChild(new SEXPR_DOUBLE(value));
+		return list;
+	}
+
+	SEXPR_LIST& operator<< (SEXPR_LIST& list, double value)
+	{
+		list.AddChild(new SEXPR_DOUBLE(value));
+		return list;
+	}
+
+	SEXPR_LIST& operator<< (SEXPR_LIST& list, const _OUT_STRING setting)
+	{
+		SEXPR *res;
+		if (setting._Symbol)
+		{
+			res = new SEXPR_SYMBOL(setting._String);
+		}
+		else
+		{
+			res = new SEXPR_STRING(setting._String);
+		}
+		list.AddChild(res);
+
+		return list;
 	}
 }
 
