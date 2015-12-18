@@ -30,6 +30,14 @@ namespace SEXPR
 
 	SEXPR* PARSER::ParseFromFile(const std::string &aFileName)
 	{
+		std::string str = PARSER::GetFileContents(aFileName);
+
+		std::string::const_iterator it = str.begin();
+		return parseString(str, it);
+	}
+
+	std::string PARSER::GetFileContents(const std::string &aFileName)
+	{
 		std::ifstream t(aFileName.c_str(), std::ios::binary);
 		std::string str;
 
@@ -41,8 +49,7 @@ namespace SEXPR
 		str.assign((std::istreambuf_iterator<char>(t)),
 		std::istreambuf_iterator<char>());
 
-		std::string::const_iterator it = str.begin();
-		return parseString(str, it);
+		return str;
 	}
 
 	SEXPR* PARSER::parseString(const std::string& aString, std::string::const_iterator& it)
