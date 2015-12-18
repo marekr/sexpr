@@ -79,12 +79,14 @@ namespace SEXPR
 
 	inline _OUT_STRING OutSymbol(const std::string& str)
 	{
-		return{ true, str };
+		struct _OUT_STRING ret = { true, str };
+		return ret;
 	}
 
 	inline _OUT_STRING OutString(const std::string& str)
 	{
-		return{ false, str };
+		struct _OUT_STRING ret = { true, str };
+		return ret;
 	}
 
 	struct SEXPR_LIST : SEXPR

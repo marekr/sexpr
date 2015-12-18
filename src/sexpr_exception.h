@@ -8,6 +8,7 @@ namespace SEXPR
 	public:
 		PARSE_EXCEPTION(const std::string m) :msg(m) {}
 		const char* what() { return msg.c_str(); }
+		virtual ~PARSE_EXCEPTION() throw() {}
 	private:
 		std::string msg;
 	};

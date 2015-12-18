@@ -30,7 +30,7 @@ namespace SEXPR
 
 	SEXPR* PARSER::ParseFromFile(const std::string &aFileName)
 	{
-		std::ifstream t(aFileName, std::ios::binary);
+		std::ifstream t(aFileName.c_str(), std::ios::binary);
 		std::string str;
 
 		// Faster than automatic allocation

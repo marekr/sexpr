@@ -1,6 +1,7 @@
 #include "sexpr.h"
 #include "sexpr_parser.h"
-
+#include <windows.h>
+#include <iostream>
 
 int main(void)
 {
@@ -81,8 +82,22 @@ int main(void)
 	}
 #endif
 
+
+	SEXPR::SEXPR_LIST* list = new SEXPR::SEXPR_LIST();
+	*list << SEXPR::OutSymbol("test") << SEXPR::OutString("kicad");
+
+	DWORD dw1 = GetTickCount();
+
 	SEXPR::SEXPR* result3 = parser.ParseFromFile("C:\\Users\\mroszko\\AppData\\Roaming\\kicad\\fp-lib-table");
+//	SEXPR::SEXPR* result3 = parser.ParseFromFile("C:\\Users\\mroszko\\Projects\\wcp52.kicad_pcb");
+//	SEXPR::SEXPR* result3 = parser.ParseFromFile("C:\\Program Files\\KiCad\\share\\kicad\\demos\\video\\video.kicad_pcb");
+	DWORD dw2 = GetTickCount();
 	std::string test3 = result3->AsString();
 
+	//Do something 
+
+
+	std::cout << "Time difference is " << (dw2 - dw1) << " milliSeconds" << std::endl;
+	//std::cout << test3;
 	return 0;
 }
