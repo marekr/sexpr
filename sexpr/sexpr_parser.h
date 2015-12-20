@@ -1,6 +1,7 @@
 #ifndef SEXPR_PARSER_H_
 #define SEXPR_PARSER_H_
 
+#include "sexpr\sexpr.h"
 #include <string>
 #include <vector>
 

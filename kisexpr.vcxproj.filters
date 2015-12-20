@@ -15,24 +15,24 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="sexpr\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sexpr_parser.cpp">
+    <ClCompile Include="sexpr\sexpr.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sexpr.cpp">
+    <ClCompile Include="sexpr\sexpr_parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sexpr.h">
+    <ClInclude Include="sexpr\sexpr.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sexpr_parser.h">
+    <ClInclude Include="sexpr\sexpr_exception.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sexpr_exception.h">
+    <ClInclude Include="sexpr\sexpr_parser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -117,6 +117,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,14 +144,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="sexpr.cpp" />
-    <ClCompile Include="sexpr_parser.cpp" />
+    <ClCompile Include="sexpr\main.cpp" />
+    <ClCompile Include="sexpr\sexpr.cpp" />
+    <ClCompile Include="sexpr\sexpr_parser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sexpr.h" />
-    <ClInclude Include="sexpr_exception.h" />
-    <ClInclude Include="sexpr_parser.h" />
+    <ClInclude Include="sexpr\sexpr.h" />
+    <ClInclude Include="sexpr\sexpr_exception.h" />
+    <ClInclude Include="sexpr\sexpr_parser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

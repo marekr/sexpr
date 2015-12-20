@@ -1,7 +1,5 @@
-
-#include "sexpr.h"
-#include "sexpr_parser.h"
-#include "sexpr_exception.h"
+#include "sexpr\sexpr_parser.h"
+#include "sexpr\sexpr_exception.h"
 #include <cctype>
 #include <iterator>
 #include <stdexcept>
