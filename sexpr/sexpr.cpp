@@ -174,6 +174,12 @@ namespace SEXPR
 		return list;
 	}
 
+	SEXPR_LIST& operator<< (SEXPR_LIST& list, std::string value)
+	{
+		list.AddChild(new SEXPR_STRING(value));
+		return list;
+	}
+
 	SEXPR_LIST& operator<< (SEXPR_LIST& list, const _OUT_STRING setting)
 	{
 		SEXPR *res;

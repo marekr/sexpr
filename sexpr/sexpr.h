@@ -99,6 +99,7 @@ namespace SEXPR
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, float value);
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, long value);
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, int value);
+		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, std::string value);
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, const _OUT_STRING setting);
 	};
 }
