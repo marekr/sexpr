@@ -15,8 +15,8 @@ namespace SEXPR
 		~PARSER();
 		SEXPR* Parse(const std::string &aString);
 		SEXPR* ParseFromFile(const std::string &filename);
-		static std::string GetFileContents(const std::string &filename);
 	private:
+		std::string getFileContents(const std::string &filename);
 		SEXPR* parseString(const std::string& aString, std::string::const_iterator& it);
 		static const std::string whitespaceCharacters;
 		int m_lineNumber;

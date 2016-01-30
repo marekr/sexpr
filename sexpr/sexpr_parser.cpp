@@ -28,24 +28,30 @@ namespace SEXPR
 
 	SEXPR* PARSER::ParseFromFile(const std::string &aFileName)
 	{
-		std::string str = PARSER::GetFileContents(aFileName);
+		std::string str = getFileContents(aFileName);
 
 		std::string::const_iterator it = str.begin();
 		return parseString(str, it);
 	}
 
-	std::string PARSER::GetFileContents(const std::string &aFileName)
+	std::string PARSER::getFileContents(const std::string &aFileName)
 	{
-		std::ifstream t(aFileName.c_str(), std::ios::binary);
+		std::ifstream file(aFileName.c_str(), std::ios::binary);
 		std::string str;
 
 		// Faster than automatic allocation
-		t.seekg(0, std::ios::end);
-		str.reserve(t.tellg());
-		t.seekg(0, std::ios::beg);
+		file.seekg(0, std::ios::end);
 
-		str.assign((std::istreambuf_iterator<char>(t)),
-		std::istreambuf_iterator<char>());
+		auto length = file.tellg();
+		if (length < 0)
+		{
+			throw PARSE_EXCEPTION("Error occurred attempting to read in file");
+		}
+
+		str.reserve(static_cast<size_t>(length));
+		file.seekg(0, std::ios::beg);
+
+		file.read(&str[0], str.length());
 
 		return str;
 	}
