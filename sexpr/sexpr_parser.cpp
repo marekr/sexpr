@@ -48,7 +48,7 @@ namespace SEXPR
 			throw PARSE_EXCEPTION("Error occurred attempting to read in file");
 		}
 
-		str.reserve(static_cast<size_t>(length));
+		str.resize(static_cast<size_t>(length));
 		file.seekg(0, std::ios::beg);
 
 		file.read(&str[0], str.length());
@@ -58,7 +58,8 @@ namespace SEXPR
 
 	SEXPR* PARSER::parseString(const std::string& aString, std::string::const_iterator& it)
 	{
-		for (; it != aString.end(); ++it)
+		std::string::const_iterator eit = aString.end();
+		for (it; it != aString.end(); ++it)
 		{
 			if (*it == '\n')
 			{
@@ -155,6 +156,8 @@ namespace SEXPR
 				}
 			}
 		}
+
+		return NULL;
 	}
 }
 

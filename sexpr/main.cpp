@@ -3,6 +3,39 @@
 #include <windows.h>
 #include <iostream>
 
+
+class TEST_OBJECT : public SEXPR::ISEXPRABLE
+{
+public:
+	TEST_OBJECT::TEST_OBJECT(int val1, std::string val2)
+	{
+		value1 = val1;
+		value2 = val2;
+	}
+
+	SEXPR::SEXPR* SerializeSEXPR() override
+	{
+		SEXPR::SEXPR_LIST* list = new SEXPR::SEXPR_LIST();
+		*list << 0;
+		*list << "test";
+
+		return list;
+	}
+
+	void DeserializeSEXPR(SEXPR::SEXPR& sexp)
+	{
+		if (sexp.IsList())
+		{
+			SEXPR::SEXPR_LIST* list = sexp.GetList();
+			*list >> value1;
+			*list >> value2;
+		}
+	}
+private:
+	int value1;
+	std::string value2;
+};
+
 int main(void)
 {
 	SEXPR::PARSER parser;
@@ -81,10 +114,18 @@ int main(void)
 		}
 	}
 #endif
-
+	TEST_OBJECT test(1,"test");
+	TEST_OBJECT test2(300, "test3");
 
 	SEXPR::SEXPR_LIST* list = new SEXPR::SEXPR_LIST();
 	*list << SEXPR::OutSymbol("test") << SEXPR::OutString("kicad");
+	*list << test;
+
+	SEXPR::SEXPR* tstobjexp = list->GetChild(2);
+	test2.DeserializeSEXPR(*tstobjexp);
+
+	std::string testty = list->AsString();
+	
 
 	DWORD dw1 = GetTickCount();
 

@@ -68,7 +68,17 @@ namespace SEXPR
 		return static_cast<SEXPR_STRING const *>(this)->m_value;
 	}
 
-	long long int SEXPR::GetInteger() const
+	int SEXPR::GetInteger() const
+	{
+		if (m_type != SEXPR_TYPE_ATOM_INTEGER)
+		{
+			throw new std::invalid_argument("SEXPR is not a integer type!");
+		}
+
+		return (int)(static_cast<SEXPR_INTEGER const *>(this)->m_value);
+	}
+
+	long long int SEXPR::GetLongInteger() const
 	{
 		if (m_type != SEXPR_TYPE_ATOM_INTEGER)
 		{
@@ -96,6 +106,17 @@ namespace SEXPR
 		}
 
 		return static_cast<SEXPR_SYMBOL const *>(this)->m_value;
+	}
+
+
+	SEXPR_LIST* SEXPR::GetList()
+	{
+		if (m_type != SEXPR_TYPE_LIST)
+		{
+			throw new std::invalid_argument("SEXPR is not a symbol type!");
+		}
+
+		return static_cast<SEXPR_LIST*>(this);
 	}
 
 	std::string SEXPR::AsString(size_t level)
@@ -150,6 +171,14 @@ namespace SEXPR
 		return result;
 	}
 
+	SEXPR_LIST& operator<< (SEXPR_LIST& list, ISEXPRABLE& obj)
+	{
+		SEXPR* sobj = obj.SerializeSEXPR();
+		list.AddChild(sobj);
+		
+		return list;
+	}
+
 	SEXPR_LIST& operator<< (SEXPR_LIST& list, long value)
 	{
 		list.AddChild(new SEXPR_INTEGER(value));
@@ -194,6 +223,45 @@ namespace SEXPR
 		list.AddChild(res);
 
 		return list;
+	}
+
+	SEXPR_LIST& operator>> (SEXPR_LIST& input, ISEXPRABLE& obj)
+	{
+		obj.DeserializeSEXPR(input);
+
+		return input;
+	}
+
+	SEXPR_LIST& operator>> (SEXPR_LIST& input, int& inte)
+	{
+		SEXPR* child = input.GetChild(input.m_inStreamChild);
+		if (child->IsInteger())
+		{
+			inte = child->GetInteger();
+			input.m_inStreamChild++;
+		}
+		else
+		{
+			throw new std::invalid_argument("SEXPR is not a integer type!");
+		}
+
+		return input;
+	}
+
+	SEXPR_LIST& operator>> (SEXPR_LIST& input, std::string& str)
+	{
+		SEXPR* child = input.GetChild(input.m_inStreamChild);
+		if (child->IsString() || child->IsSymbol())
+		{
+			str = child->GetString();
+			input.m_inStreamChild++;
+		}
+		else
+		{
+			throw new std::invalid_argument("SEXPR is not a string type!");
+		}
+
+		return input;
 	}
 }
 
