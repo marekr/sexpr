@@ -81,15 +81,33 @@ namespace SEXPR
 		const std::string& _String;
 	};
 
-	inline _OUT_STRING OutSymbol(const std::string& str)
+	inline _OUT_STRING AsSymbol(const std::string& str)
 	{
 		struct _OUT_STRING ret = { true, str };
 		return ret;
 	}
 
-	inline _OUT_STRING OutString(const std::string& str)
+	inline _OUT_STRING AsString(const std::string& str)
 	{
 		struct _OUT_STRING ret = { true, str };
+		return ret;
+	}
+
+	struct _IN_STRING
+	{
+		bool _Symbol;
+		std::string& _String;
+	};
+
+	inline _IN_STRING AsSymbol(std::string& str)
+	{
+		struct _IN_STRING ret = { true, str };
+		return ret;
+	}
+
+	inline _IN_STRING AsString(std::string& str)
+	{
+		struct _IN_STRING ret = { true, str };
 		return ret;
 	}
 
@@ -113,6 +131,7 @@ namespace SEXPR
 		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, long long int& inte);
 		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, float& inte);
 		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, double& inte);
+		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, const _IN_STRING is);
 	private:
 		int m_inStreamChild;
 	};

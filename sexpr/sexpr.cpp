@@ -311,5 +311,36 @@ namespace SEXPR
 
 		return input;
 	}
+
+	SEXPR_LIST& operator>> (SEXPR_LIST& input, const _IN_STRING is)
+	{
+		SEXPR* child = input.GetChild(input.m_inStreamChild);
+		if (is._Symbol)
+		{
+			if (child->IsSymbol())
+			{
+				is._String = child->GetSymbol();
+				input.m_inStreamChild++;
+			}
+			else
+			{
+				throw new std::invalid_argument("SEXPR is not a symbol type!");
+			}
+		}
+		else
+		{
+			if (child->IsString())
+			{
+				is._String = child->GetString();
+				input.m_inStreamChild++;
+			}
+			else
+			{
+				throw new std::invalid_argument("SEXPR is not a string type!");
+			}
+		}
+
+		return input;
+	}
 }
 

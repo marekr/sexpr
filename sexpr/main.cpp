@@ -120,7 +120,7 @@ int main(void)
 	TEST_OBJECT test2(300, "test3");
 
 	SEXPR::SEXPR_LIST* list = new SEXPR::SEXPR_LIST();
-	*list << SEXPR::OutSymbol("test") << SEXPR::OutString("kicad");
+	*list << SEXPR::AsSymbol("test") << SEXPR::AsString("kicad");
 	*list << test;
 
 	SEXPR::SEXPR* tstobjexp = list->GetChild(2);
