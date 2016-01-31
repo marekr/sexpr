@@ -40,13 +40,14 @@ int main(void)
 {
 	SEXPR::PARSER parser;
 
-#if 0
+#if EXAMPLE1
 	std::string data = "((data \"quoted data\" 123 -4.5)(data(!@# (4.5) \"(more\" \"data)\")))";
 	SEXPR::SEXPR* result = parser.Parse(data);
 
 	std::string test = result->AsString();
+#endif
 
-
+#if EXAMPLE2
 	int kicadVersion = 0;
 	std::string host = "";
 	std::string hostExtra = "";
@@ -114,6 +115,7 @@ int main(void)
 		}
 	}
 #endif
+
 	TEST_OBJECT test(1,"test");
 	TEST_OBJECT test2(300, "test3");
 

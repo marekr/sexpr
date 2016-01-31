@@ -38,6 +38,7 @@ namespace SEXPR
 		size_t GetNumberOfChildren() const;
 		long long int GetLongInteger() const;
 		int GetInteger() const;
+		float GetFloat() const;
 		double GetDouble() const;
 		std::string const & GetString() const;
 		std::string const & GetSymbol() const;
@@ -101,7 +102,7 @@ namespace SEXPR
 
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, double value);
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, float value);
-		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, long value);
+		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, long long int value);
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, int value);
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, std::string value);
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, const _OUT_STRING setting);
@@ -109,6 +110,9 @@ namespace SEXPR
 		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, ISEXPRABLE& obj);
 		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, std::string& str);
 		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, int& inte);
+		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, long long int& inte);
+		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, float& inte);
+		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, double& inte);
 	private:
 		int m_inStreamChild;
 	};

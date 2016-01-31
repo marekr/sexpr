@@ -70,12 +70,7 @@ namespace SEXPR
 
 	int SEXPR::GetInteger() const
 	{
-		if (m_type != SEXPR_TYPE_ATOM_INTEGER)
-		{
-			throw new std::invalid_argument("SEXPR is not a integer type!");
-		}
-
-		return (int)(static_cast<SEXPR_INTEGER const *>(this)->m_value);
+		return static_cast<int>(GetLongInteger());
 	}
 
 	long long int SEXPR::GetLongInteger() const
@@ -96,6 +91,11 @@ namespace SEXPR
 		}
 
 		return static_cast<SEXPR_DOUBLE const *>(this)->m_value;
+	}
+
+	float SEXPR::GetFloat() const
+	{
+		return static_cast<float>(GetDouble());
 	}
 
 	std::string const & SEXPR::GetSymbol() const
@@ -179,7 +179,7 @@ namespace SEXPR
 		return list;
 	}
 
-	SEXPR_LIST& operator<< (SEXPR_LIST& list, long value)
+	SEXPR_LIST& operator<< (SEXPR_LIST& list, long long int value)
 	{
 		list.AddChild(new SEXPR_INTEGER(value));
 		return list;
@@ -259,6 +259,54 @@ namespace SEXPR
 		else
 		{
 			throw new std::invalid_argument("SEXPR is not a string type!");
+		}
+
+		return input;
+	}
+
+	SEXPR_LIST& operator>> (SEXPR_LIST& input, long long int& lint)
+	{
+		SEXPR* child = input.GetChild(input.m_inStreamChild);
+		if (child->IsInteger())
+		{
+			lint = child->GetLongInteger();
+			input.m_inStreamChild++;
+		}
+		else
+		{
+			throw new std::invalid_argument("SEXPR is not a long integer type!");
+		}
+
+		return input;
+	}
+
+	SEXPR_LIST& operator>> (SEXPR_LIST& input, float& fl)
+	{
+		SEXPR* child = input.GetChild(input.m_inStreamChild);
+		if (child->IsDouble())
+		{
+			fl = child->GetFloat();
+			input.m_inStreamChild++;
+		}
+		else
+		{
+			throw new std::invalid_argument("SEXPR is not a float type!");
+		}
+
+		return input;
+	}
+
+	SEXPR_LIST& operator>> (SEXPR_LIST& input, double& dbl)
+	{
+		SEXPR* child = input.GetChild(input.m_inStreamChild);
+		if (child->IsDouble())
+		{
+			dbl = child->GetDouble();
+			input.m_inStreamChild++;
+		}
+		else
+		{
+			throw new std::invalid_argument("SEXPR is not a double type!");
 		}
 
 		return input;
