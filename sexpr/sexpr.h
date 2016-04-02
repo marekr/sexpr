@@ -3,7 +3,7 @@
 
 #include <string>
 #include <vector>
-#include "sexpr\isexprable.h"
+#include "sexpr/isexprable.h"
 
 namespace SEXPR
 {
@@ -27,6 +27,7 @@ namespace SEXPR
 		size_t m_lineNumber;
 
 	public:
+		virtual ~SEXPR() {};
 		bool IsList() const { return m_type == SEXPR_TYPE_LIST; }
 		bool IsSymbol() const { return m_type == SEXPR_TYPE_ATOM_SYMBOL; }
 		bool IsString() const { return m_type == SEXPR_TYPE_ATOM_STRING; }
@@ -89,7 +90,7 @@ namespace SEXPR
 
 	inline _OUT_STRING AsString(const std::string& str)
 	{
-		struct _OUT_STRING ret = { true, str };
+		struct _OUT_STRING ret = { false, str };
 		return ret;
 	}
 
@@ -107,7 +108,7 @@ namespace SEXPR
 
 	inline _IN_STRING AsString(std::string& str)
 	{
-		struct _IN_STRING ret = { true, str };
+		struct _IN_STRING ret = { false, str };
 		return ret;
 	}
 
@@ -118,13 +119,16 @@ namespace SEXPR
 		SEXPR_LIST(int lineNumber) : SEXPR(SEXPR_TYPE_LIST, lineNumber), m_inStreamChild(0) {};
 		SEXPR_VECTOR m_children;
 
+		virtual ~SEXPR_LIST();
+
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, double value);
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, float value);
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, long long int value);
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, int value);
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, std::string value);
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, const _OUT_STRING setting);
-		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, ISEXPRABLE& obj);
+		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, const ISEXPRABLE& obj);
+		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, SEXPR_LIST* list2);
 		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, ISEXPRABLE& obj);
 		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, std::string& str);
 		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, int& inte);

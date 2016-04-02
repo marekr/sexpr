@@ -1,4 +1,4 @@
-#include "sexpr.h"
+﻿#include "sexpr.h"
 #include "sexpr_parser.h"
 #include <windows.h>
 #include <iostream>
@@ -13,7 +13,7 @@ public:
 		value2 = val2;
 	}
 
-	SEXPR::SEXPR* SerializeSEXPR() override
+	SEXPR::SEXPR* SerializeSEXPR() const override
 	{
 		SEXPR::SEXPR_LIST* list = new SEXPR::SEXPR_LIST();
 		*list << 0;
@@ -121,6 +121,7 @@ int main(void)
 
 	SEXPR::SEXPR_LIST* list = new SEXPR::SEXPR_LIST();
 	*list << SEXPR::AsSymbol("test") << SEXPR::AsString("kicad");
+	std::string teststr = "tedad";
 	*list << test;
 
 	SEXPR::SEXPR* tstobjexp = list->GetChild(2);
@@ -131,12 +132,16 @@ int main(void)
 
 	DWORD dw1 = GetTickCount();
 
-	SEXPR::SEXPR* result3 = parser.ParseFromFile("C:\\Users\\mroszko\\AppData\\Roaming\\kicad\\fp-lib-table");
+	//SEXPR::SEXPR* result3 = parser.ParseFromFile("C:\\Users\\mroszko\\AppData\\Roaming\\kicad\\fp-lib-table");
 //	SEXPR::SEXPR* result3 = parser.ParseFromFile("C:\\Users\\mroszko\\Projects\\wcp52.kicad_pcb");
 //	SEXPR::SEXPR* result3 = parser.ParseFromFile("C:\\Program Files\\KiCad\\share\\kicad\\demos\\video\\video.kicad_pcb");
+	//SEXPR::SEXPR* result3 = parser.ParseFromFile("C:\\Users\\mroszko\\AppData\\Roaming\\kicad\\fp-lib-table");
+	SEXPR::SEXPR* result3 = parser.ParseFromFile("C:\\Users\\mroszko\\Pictures\\test2.kicad_wks");
+
 	DWORD dw2 = GetTickCount();
 	std::string test3 = result3->AsString();
 
+	delete result3;
 	//Do something 
 
 

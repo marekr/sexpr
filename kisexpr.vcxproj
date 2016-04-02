@@ -89,6 +89,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableLanguageExtensions>false</DisableLanguageExtensions>
+      <AdditionalIncludeDirectories>.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,6 +150,7 @@
     <ClCompile Include="sexpr\sexpr_parser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="sexpr\isexprable.h" />
     <ClInclude Include="sexpr\sexpr.h" />
     <ClInclude Include="sexpr\sexpr_exception.h" />
     <ClInclude Include="sexpr\sexpr_parser.h" />

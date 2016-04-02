@@ -21,18 +21,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
  */
 
-#include <exception>
-#include <string>
+#ifndef ISEXPRABLE_H_
+#define ISEXPRABLE_H_
+
+#include "sexpr/sexpr.h"
 
 namespace SEXPR
 {
-    class PARSE_EXCEPTION : public std::exception
+    class SEXPR;
+    class SEXPR_LIST;
+
+    class ISEXPRABLE
     {
     public:
-        PARSE_EXCEPTION(const std::string m) :msg(m) {}
-        const char* what() { return msg.c_str(); }
-        virtual ~PARSE_EXCEPTION() throw() {}
-    private:
-        std::string msg;
+        virtual ~ISEXPRABLE() {}
+        virtual SEXPR* SerializeSEXPR() const { return nullptr; }
+        virtual void DeserializeSEXPR(SEXPR& sexp) {}
     };
 }
+
+#endif
