@@ -155,15 +155,15 @@ namespace SEXPR
 		std::string str_value;
 	};
 
-	class SEXPR_POPULATE_ARG {
+	class SEXPR_APPEND_ARG {
 		friend class SEXPR_LIST;
 	public:
-		SEXPR_POPULATE_ARG(int value) : type(INT) { u.int_value = value; }
-		SEXPR_POPULATE_ARG(long int value) : type(LONGINT) { u.lint_value = value; }
-		SEXPR_POPULATE_ARG(double value) : type(DOUBLE) { u.dbl_value = value; }
-		SEXPR_POPULATE_ARG(std::string value) : type(STRING) { str_value = value; }
-		SEXPR_POPULATE_ARG(const _OUT_STRING& value) : type(SEXPR_STRING) { u.sexpr_str_value = &value; }
-		SEXPR_POPULATE_ARG(SEXPR* ptr) : type(SEXPR_STRING) { u.sexpr_ptr = ptr; }
+		SEXPR_APPEND_ARG(int value) : type(INT) { u.int_value = value; }
+		SEXPR_APPEND_ARG(long int value) : type(LONGINT) { u.lint_value = value; }
+		SEXPR_APPEND_ARG(double value) : type(DOUBLE) { u.dbl_value = value; }
+		SEXPR_APPEND_ARG(std::string value) : type(STRING) { str_value = value; }
+		SEXPR_APPEND_ARG(const _OUT_STRING& value) : type(SEXPR_STRING) { u.sexpr_str_value = &value; }
+		SEXPR_APPEND_ARG(SEXPR* ptr) : type(SEXPR_STRING) { u.sexpr_ptr = ptr; }
 
 	private:
 		enum Type { INT, DOUBLE, STRING, LONGINT, SEXPR_STRING, SEXPR_ATOM };
@@ -183,6 +183,13 @@ namespace SEXPR
 	public:
 		SEXPR_LIST() : SEXPR(SEXPR_TYPE_LIST), m_inStreamChild(0) {};
 		SEXPR_LIST(int lineNumber) : SEXPR(SEXPR_TYPE_LIST, lineNumber), m_inStreamChild(0) {};
+
+		template <typename... Args>
+		SEXPR_LIST(const Args&... args) : SEXPR(SEXPR_TYPE_LIST), m_inStreamChild(0) 
+		{
+			Append(args...);
+		};
+
 		SEXPR_VECTOR m_children;
 
 		template <typename... Args>
@@ -193,10 +200,10 @@ namespace SEXPR
 		}
 
 		template <typename... Args>
-		void Populate(const Args&... args)
+		void Append(const Args&... args)
 		{
-			SEXPR_POPULATE_ARG arg_array[] = { args... };
-			doPopulate(arg_array, sizeof...(Args));
+			SEXPR_APPEND_ARG arg_array[] = { args... };
+			doAppend(arg_array, sizeof...(Args));
 		}
 
 		virtual ~SEXPR_LIST();
@@ -220,7 +227,7 @@ namespace SEXPR
 	private:
 		int m_inStreamChild;
 		size_t doScan(const SEXPR_SCAN_ARG *args, size_t num_args);
-		void doPopulate(const SEXPR_POPULATE_ARG *args, size_t num_args);
+		void doAppend(const SEXPR_APPEND_ARG *args, size_t num_args);
 	};
 }
 

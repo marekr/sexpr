@@ -127,13 +127,14 @@ int main(void)
 	std::string secondPart;
 	size_t res = list->Scan("test", &secondPart);
 
-	list->Populate(SEXPR::AsSymbol("test"), 2, 3.5f);
+	list->Append(SEXPR::AsSymbol("test"), 2, 3.5f);
 
 	SEXPR::SEXPR* tstobjexp = list->GetChild(2);
 	test2.DeserializeSEXPR(*tstobjexp);
 
 	std::string testty = list->AsString();
-	
+
+	SEXPR::SEXPR_LIST* list3 = new SEXPR::SEXPR_LIST(1,2.5f,"test");
 
 	DWORD dw1 = GetTickCount();
 
