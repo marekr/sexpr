@@ -431,7 +431,7 @@ namespace SEXPR
 				{
 					*arg.u.lint_value = child->GetLongInteger();
 				}
-				else if (arg.type == SEXPR_EXPLODE_ARG::Type::STRING)
+				else if (arg.type == SEXPR_EXPLODE_ARG::Type::SEXPR_STRING)
 				{
 					if (arg.u.sexpr_str->_Symbol)
 					{
