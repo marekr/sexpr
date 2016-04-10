@@ -398,25 +398,25 @@ namespace SEXPR
         return list;
     }
 
-	size_t SEXPR_LIST::doScan(const SEXPR_EXPLODE_ARG *args, size_t num_args)
+	size_t SEXPR_LIST::doScan(const SEXPR_SCAN_ARG *args, size_t num_args)
 	{
 		size_t i = 0;
 		for (i = 0; i < num_args; i++)
 		{
 			SEXPR* child = GetChild(i);
-			const SEXPR_EXPLODE_ARG& arg = args[i];
+			const SEXPR_SCAN_ARG& arg = args[i];
 
 			try
 			{
-				if (arg.type == SEXPR_EXPLODE_ARG::Type::DOUBLE)
+				if (arg.type == SEXPR_SCAN_ARG::Type::DOUBLE)
 				{
 					*arg.u.dbl_value = child->GetDouble();
 				}
-				else if (arg.type == SEXPR_EXPLODE_ARG::Type::INT)
+				else if (arg.type == SEXPR_SCAN_ARG::Type::INT)
 				{
 					*arg.u.dbl_value = child->GetInteger();
 				}
-				else if (arg.type == SEXPR_EXPLODE_ARG::Type::STRING)
+				else if (arg.type == SEXPR_SCAN_ARG::Type::STRING)
 				{
 					if (child->IsSymbol())
 					{
@@ -427,11 +427,11 @@ namespace SEXPR
 						*arg.u.str_value = child->GetString();
 					}
 				}
-				else if (arg.type == SEXPR_EXPLODE_ARG::Type::LONGINT)
+				else if (arg.type == SEXPR_SCAN_ARG::Type::LONGINT)
 				{
 					*arg.u.lint_value = child->GetLongInteger();
 				}
-				else if (arg.type == SEXPR_EXPLODE_ARG::Type::SEXPR_STRING)
+				else if (arg.type == SEXPR_SCAN_ARG::Type::SEXPR_STRING)
 				{
 					if (arg.u.sexpr_str->_Symbol)
 					{
@@ -443,7 +443,7 @@ namespace SEXPR
 					}
 
 				}
-				else if (arg.type == SEXPR_EXPLODE_ARG::Type::STRING_COMP)
+				else if (arg.type == SEXPR_SCAN_ARG::Type::STRING_COMP)
 				{
 					if (child->IsSymbol())
 					{
@@ -472,5 +472,46 @@ namespace SEXPR
 		}
 
 		return i;
+	}
+
+	void SEXPR_LIST::doPopulate(const SEXPR_POPULATE_ARG *args, size_t num_args)
+	{
+		size_t i = 0;
+		for (i = 0; i < num_args; i++)
+		{
+			const SEXPR_POPULATE_ARG& arg = args[i];
+
+			if (arg.type == SEXPR_POPULATE_ARG::Type::DOUBLE)
+			{
+				AddChild(new SEXPR_DOUBLE(arg.u.dbl_value));
+			}
+			else if (arg.type == SEXPR_POPULATE_ARG::Type::INT)
+			{
+				AddChild(new SEXPR_INTEGER(arg.u.int_value));
+			}
+			else if (arg.type == SEXPR_POPULATE_ARG::Type::LONGINT)
+			{
+				AddChild(new SEXPR_INTEGER(arg.u.lint_value));
+			}
+			else if (arg.type == SEXPR_POPULATE_ARG::Type::STRING)
+			{
+				AddChild(new SEXPR_STRING(arg.str_value));
+			}
+			else if (arg.type == SEXPR_POPULATE_ARG::Type::SEXPR_STRING)
+			{
+				if (arg.sexpr_str_value->_Symbol)
+				{
+					AddChild(new SEXPR_SYMBOL(arg.sexpr_str_value->_String));
+				}
+				else
+				{
+					AddChild(new SEXPR_STRING(arg.sexpr_str_value->_String));
+				}
+			}
+			else
+			{
+				throw new std::invalid_argument("unexpected argument type, this shouldn't have happened");
+			}
+		}
 	}
 }

@@ -127,6 +127,8 @@ int main(void)
 	std::string secondPart;
 	size_t res = list->Scan("test", &secondPart);
 
+	list->Populate(SEXPR::AsSymbol("test"), 2, 3.5f);
+
 	SEXPR::SEXPR* tstobjexp = list->GetChild(2);
 	test2.DeserializeSEXPR(*tstobjexp);
 

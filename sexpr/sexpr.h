@@ -99,6 +99,7 @@ namespace SEXPR
 	{
 		bool _Symbol;
 		std::string& _String;
+
 	};
 
 	inline _IN_STRING AsSymbol(std::string& str)
@@ -113,15 +114,15 @@ namespace SEXPR
 		return ret;
 	}
 
-	class SEXPR_EXPLODE_ARG {
+	class SEXPR_SCAN_ARG {
 		friend class SEXPR_LIST;
 	public:
-		SEXPR_EXPLODE_ARG(int* value) : type(INT) { u.int_value = value; }
-		SEXPR_EXPLODE_ARG(long int* value) : type(LONGINT) { u.lint_value = value; }
-		SEXPR_EXPLODE_ARG(double* value) : type(DOUBLE) { u.dbl_value = value; }
-		SEXPR_EXPLODE_ARG(std::string* value) : type(STRING) { u.str_value = value; }
-		SEXPR_EXPLODE_ARG(_IN_STRING& value) : type(SEXPR_STRING) { u.sexpr_str = &value; }
-		SEXPR_EXPLODE_ARG(std::string value) : type(STRING_COMP) { str_value = value; }
+		SEXPR_SCAN_ARG(int* value) : type(INT) { u.int_value = value; }
+		SEXPR_SCAN_ARG(long int* value) : type(LONGINT) { u.lint_value = value; }
+		SEXPR_SCAN_ARG(double* value) : type(DOUBLE) { u.dbl_value = value; }
+		SEXPR_SCAN_ARG(std::string* value) : type(STRING) { u.str_value = value; }
+		SEXPR_SCAN_ARG(_IN_STRING& value) : type(SEXPR_STRING) { u.sexpr_str = &value; }
+		SEXPR_SCAN_ARG(std::string value) : type(STRING_COMP) { str_value = value; }
 
 	private:
 		enum Type { INT, DOUBLE, STRING, LONGINT, STRING_COMP, SEXPR_STRING};
@@ -137,6 +138,27 @@ namespace SEXPR
 		std::string str_value;
 	};
 
+	class SEXPR_POPULATE_ARG {
+		friend class SEXPR_LIST;
+	public:
+		SEXPR_POPULATE_ARG(int value) : type(INT) { u.int_value = value; }
+		SEXPR_POPULATE_ARG(long int value) : type(LONGINT) { u.lint_value = value; }
+		SEXPR_POPULATE_ARG(double value) : type(DOUBLE) { u.dbl_value = value; }
+		SEXPR_POPULATE_ARG(std::string value) : type(STRING) { str_value = value; }
+		SEXPR_POPULATE_ARG(const _OUT_STRING& value) : type(SEXPR_STRING) { sexpr_str_value = &value; }
+
+	private:
+		enum Type { INT, DOUBLE, STRING, LONGINT, SEXPR_STRING };
+		Type type;
+		union {
+			long int lint_value;
+			int int_value;
+			double dbl_value;
+		} u;
+		const _OUT_STRING* sexpr_str_value;
+		std::string str_value;
+	};
+
 	class SEXPR_LIST : public SEXPR
 	{
 	public:
@@ -147,8 +169,15 @@ namespace SEXPR
 		template <typename... Args>
 		size_t Scan(const Args&... args)
 		{
-			SEXPR_EXPLODE_ARG arg_array[] = { args... };
+			SEXPR_SCAN_ARG arg_array[] = { args... };
 			return doScan(arg_array, sizeof...(Args));
+		}
+
+		template <typename... Args>
+		void Populate(const Args&... args)
+		{
+			SEXPR_POPULATE_ARG arg_array[] = { args... };
+			doPopulate(arg_array, sizeof...(Args));
 		}
 
 		virtual ~SEXPR_LIST();
@@ -171,7 +200,8 @@ namespace SEXPR
 		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, const _IN_STRING is);
 	private:
 		int m_inStreamChild;
-		size_t doScan(const SEXPR_EXPLODE_ARG *args, size_t num_args);
+		size_t doScan(const SEXPR_SCAN_ARG *args, size_t num_args);
+		void doPopulate(const SEXPR_POPULATE_ARG *args, size_t num_args);
 	};
 }
 
