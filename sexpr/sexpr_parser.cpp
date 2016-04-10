@@ -68,7 +68,7 @@ namespace SEXPR
         auto length = file.tellg();
         if (length < 0)
         {
-            throw PARSE_EXCEPTION("Error occurred attempting to read in file");
+            throw new PARSE_EXCEPTION("Error occurred attempting to read in file");
         }
 
         str.resize(static_cast<size_t>(length));
@@ -135,7 +135,7 @@ namespace SEXPR
                 }
                 else
                 {
-                    throw PARSE_EXCEPTION("missing closing quote");
+                    throw new PARSE_EXCEPTION("missing closing quote");
                 }
             }
             else
@@ -175,7 +175,7 @@ namespace SEXPR
                 }
                 else
                 {
-                    throw PARSE_EXCEPTION("format error");
+                    throw new PARSE_EXCEPTION("format error");
                 }
             }
         }

@@ -20,6 +20,8 @@
  * or you may write to the Free Software Foundation, Inc.,
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
  */
+#ifndef SEXPR_EXCEPTION_H_
+#define SEXPR_EXCEPTION_H_
 
 #include <exception>
 #include <string>
@@ -35,4 +37,15 @@ namespace SEXPR
     private:
         std::string msg;
     };
+
+	class INVALID_TYPE_EXCEPTION : public std::exception
+	{
+	public:
+		INVALID_TYPE_EXCEPTION(const std::string m) :msg(m) {}
+		const char* what() { return msg.c_str(); }
+		virtual ~INVALID_TYPE_EXCEPTION() throw() {}
+	private:
+		std::string msg;
+	};
 }
+#endif

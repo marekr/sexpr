@@ -124,6 +124,9 @@ int main(void)
 	std::string teststr = "tedad";
 	*list << test;
 
+	std::string secondPart;
+	size_t res = list->Scan("test", &secondPart);
+
 	SEXPR::SEXPR* tstobjexp = list->GetChild(2);
 	test2.DeserializeSEXPR(*tstobjexp);
 

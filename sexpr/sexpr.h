@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "sexpr/isexprable.h"
+#include "sexpr/sexpr_exception.h"
 
 namespace SEXPR
 {
@@ -112,12 +113,43 @@ namespace SEXPR
 		return ret;
 	}
 
+	class SEXPR_EXPLODE_ARG {
+		friend class SEXPR_LIST;
+	public:
+		SEXPR_EXPLODE_ARG(int* value) : type(INT) { u.int_value = value; }
+		SEXPR_EXPLODE_ARG(long int* value) : type(LONGINT) { u.lint_value = value; }
+		SEXPR_EXPLODE_ARG(double* value) : type(DOUBLE) { u.dbl_value = value; }
+		SEXPR_EXPLODE_ARG(std::string* value) : type(STRING) { u.str_value = value; }
+		SEXPR_EXPLODE_ARG(_IN_STRING& value) : type(SEXPR_STRING) { u.sexpr_str = &value; }
+		SEXPR_EXPLODE_ARG(std::string value) : type(STRING_COMP) { str_value = value; }
+
+	private:
+		enum Type { INT, DOUBLE, STRING, LONGINT, STRING_COMP, SEXPR_STRING};
+		Type type;
+		union {
+			long int* lint_value;
+			int* int_value;
+			double* dbl_value;
+			std::string* str_value;
+			_IN_STRING* sexpr_str;
+		} u;
+
+		std::string str_value;
+	};
+
 	class SEXPR_LIST : public SEXPR
 	{
 	public:
 		SEXPR_LIST() : SEXPR(SEXPR_TYPE_LIST), m_inStreamChild(0) {};
 		SEXPR_LIST(int lineNumber) : SEXPR(SEXPR_TYPE_LIST, lineNumber), m_inStreamChild(0) {};
 		SEXPR_VECTOR m_children;
+
+		template <typename... Args>
+		size_t Scan(const Args&... args)
+		{
+			SEXPR_EXPLODE_ARG arg_array[] = { args... };
+			return doScan(arg_array, sizeof...(Args));
+		}
 
 		virtual ~SEXPR_LIST();
 
@@ -138,6 +170,7 @@ namespace SEXPR
 		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, const _IN_STRING is);
 	private:
 		int m_inStreamChild;
+		size_t doScan(const SEXPR_EXPLODE_ARG *args, size_t num_args);
 	};
 }
 

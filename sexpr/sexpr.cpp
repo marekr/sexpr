@@ -44,7 +44,7 @@ namespace SEXPR
     {
         if (m_type != SEXPR_TYPE_LIST)
         {
-            throw new std::invalid_argument("SEXPR is not a list type!");
+            throw new INVALID_TYPE_EXCEPTION("SEXPR is not a list type!");
         }
 
         return &static_cast<SEXPR_LIST const *>(this)->m_children;
@@ -54,7 +54,7 @@ namespace SEXPR
     {
         if (m_type != SEXPR_TYPE_LIST)
         {
-            throw new std::invalid_argument("SEXPR is not a list type!");
+            throw new INVALID_TYPE_EXCEPTION("SEXPR is not a list type!");
         }
 
         return static_cast<SEXPR_LIST const *>(this)->m_children[idx];
@@ -64,7 +64,7 @@ namespace SEXPR
     {
         if (m_type != SEXPR_TYPE_LIST)
         {
-            throw new std::invalid_argument("SEXPR is not a list type!");
+            throw new INVALID_TYPE_EXCEPTION("SEXPR is not a list type!");
         }
 
         SEXPR_LIST* list = static_cast<SEXPR_LIST *>(this);
@@ -76,7 +76,7 @@ namespace SEXPR
     {
         if (m_type != SEXPR_TYPE_LIST)
         {
-            throw new std::invalid_argument("SEXPR is not a list type!");
+            throw new INVALID_TYPE_EXCEPTION("SEXPR is not a list type!");
         }
 
         return static_cast<SEXPR_LIST const *>(this)->m_children.size();
@@ -86,7 +86,7 @@ namespace SEXPR
     {
         if (m_type != SEXPR_TYPE_ATOM_STRING)
         {
-            throw new std::invalid_argument("SEXPR is not a string type!");
+            throw new INVALID_TYPE_EXCEPTION("SEXPR is not a string type!");
         }
 
         return static_cast<SEXPR_STRING const *>(this)->m_value;
@@ -101,7 +101,7 @@ namespace SEXPR
     {
         if (m_type != SEXPR_TYPE_ATOM_INTEGER)
         {
-            throw new std::invalid_argument("SEXPR is not a integer type!");
+            throw new INVALID_TYPE_EXCEPTION("SEXPR is not a integer type!");
         }
 
         return static_cast<SEXPR_INTEGER const *>(this)->m_value;
@@ -121,7 +121,7 @@ namespace SEXPR
         }
         else
         {
-            throw new std::invalid_argument("SEXPR is not a double type!");
+            throw new INVALID_TYPE_EXCEPTION("SEXPR is not a double type!");
         }
     }
 
@@ -134,7 +134,7 @@ namespace SEXPR
     {
         if (m_type != SEXPR_TYPE_ATOM_SYMBOL)
         {
-            throw new std::invalid_argument("SEXPR is not a symbol type!");
+            throw new INVALID_TYPE_EXCEPTION("SEXPR is not a symbol type!");
         }
 
         return static_cast<SEXPR_SYMBOL const *>(this)->m_value;
@@ -145,7 +145,7 @@ namespace SEXPR
     {
         if (m_type != SEXPR_TYPE_LIST)
         {
-            throw new std::invalid_argument("SEXPR is not a symbol type!");
+            throw new INVALID_TYPE_EXCEPTION("SEXPR is not a list type!");
         }
 
         return static_cast<SEXPR_LIST*>(this);
@@ -397,4 +397,80 @@ namespace SEXPR
 
         return list;
     }
+
+	size_t SEXPR_LIST::doScan(const SEXPR_EXPLODE_ARG *args, size_t num_args)
+	{
+		size_t i = 0;
+		for (i = 0; i < num_args; i++)
+		{
+			SEXPR* child = GetChild(i);
+			const SEXPR_EXPLODE_ARG& arg = args[i];
+
+			try
+			{
+				if (arg.type == SEXPR_EXPLODE_ARG::Type::DOUBLE)
+				{
+					*arg.u.dbl_value = child->GetDouble();
+				}
+				else if (arg.type == SEXPR_EXPLODE_ARG::Type::INT)
+				{
+					*arg.u.dbl_value = child->GetInteger();
+				}
+				else if (arg.type == SEXPR_EXPLODE_ARG::Type::STRING)
+				{
+					if (child->IsSymbol())
+					{
+						*arg.u.str_value = child->GetSymbol();
+					}
+					else if (child->IsString())
+					{
+						*arg.u.str_value = child->GetString();
+					}
+				}
+				else if (arg.type == SEXPR_EXPLODE_ARG::Type::LONGINT)
+				{
+					*arg.u.lint_value = child->GetLongInteger();
+				}
+				else if (arg.type == SEXPR_EXPLODE_ARG::Type::STRING)
+				{
+					if (arg.u.sexpr_str->_Symbol)
+					{
+						arg.u.sexpr_str->_String = child->GetSymbol();
+					}
+					else
+					{
+						arg.u.sexpr_str->_String = child->GetString();
+					}
+
+				}
+				else if (arg.type == SEXPR_EXPLODE_ARG::Type::STRING_COMP)
+				{
+					if (child->IsSymbol())
+					{
+						if (child->GetSymbol() != arg.str_value)
+						{
+							return i;
+						}
+					}
+					else if (child->IsString())
+					{
+						if (child->GetString() != arg.str_value)
+						{
+							return i;
+						}
+					}
+				}
+				else
+				{
+					throw new std::invalid_argument("unsupported argument type, this shouldn't have happened");
+				}
+			}
+			catch (INVALID_TYPE_EXCEPTION)
+			{
+				return i;
+			}
+		}
+
+		return i;
+	}
 }
