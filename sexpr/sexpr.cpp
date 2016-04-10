@@ -497,15 +497,19 @@ namespace SEXPR
 			{
 				AddChild(new SEXPR_STRING(arg.str_value));
 			}
+			else if (arg.type == SEXPR_POPULATE_ARG::Type::SEXPR_ATOM)
+			{
+				AddChild(arg.u.sexpr_ptr);
+			}
 			else if (arg.type == SEXPR_POPULATE_ARG::Type::SEXPR_STRING)
 			{
-				if (arg.sexpr_str_value->_Symbol)
+				if (arg.u.sexpr_str_value->_Symbol)
 				{
-					AddChild(new SEXPR_SYMBOL(arg.sexpr_str_value->_String));
+					AddChild(new SEXPR_SYMBOL(arg.u.sexpr_str_value->_String));
 				}
 				else
 				{
-					AddChild(new SEXPR_STRING(arg.sexpr_str_value->_String));
+					AddChild(new SEXPR_STRING(arg.u.sexpr_str_value->_String));
 				}
 			}
 			else

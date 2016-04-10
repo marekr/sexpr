@@ -145,17 +145,19 @@ namespace SEXPR
 		SEXPR_POPULATE_ARG(long int value) : type(LONGINT) { u.lint_value = value; }
 		SEXPR_POPULATE_ARG(double value) : type(DOUBLE) { u.dbl_value = value; }
 		SEXPR_POPULATE_ARG(std::string value) : type(STRING) { str_value = value; }
-		SEXPR_POPULATE_ARG(const _OUT_STRING& value) : type(SEXPR_STRING) { sexpr_str_value = &value; }
+		SEXPR_POPULATE_ARG(const _OUT_STRING& value) : type(SEXPR_STRING) { u.sexpr_str_value = &value; }
+		SEXPR_POPULATE_ARG(SEXPR* ptr) : type(SEXPR_STRING) { u.sexpr_ptr = ptr; }
 
 	private:
-		enum Type { INT, DOUBLE, STRING, LONGINT, SEXPR_STRING };
+		enum Type { INT, DOUBLE, STRING, LONGINT, SEXPR_STRING, SEXPR_ATOM };
 		Type type;
 		union {
 			long int lint_value;
 			int int_value;
 			double dbl_value;
+			SEXPR* sexpr_ptr;
+			const _OUT_STRING* sexpr_str_value;
 		} u;
-		const _OUT_STRING* sexpr_str_value;
 		std::string str_value;
 	};
 
