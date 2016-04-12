@@ -162,8 +162,8 @@ namespace SEXPR
 		SEXPR_APPEND_ARG(long int value) : type(LONGINT) { u.lint_value = value; }
 		SEXPR_APPEND_ARG(double value) : type(DOUBLE) { u.dbl_value = value; }
 		SEXPR_APPEND_ARG(std::string value) : type(STRING) { str_value = value; }
-		SEXPR_APPEND_ARG(const _OUT_STRING& value) : type(SEXPR_STRING) { u.sexpr_str_value = &value; }
-		SEXPR_APPEND_ARG(SEXPR* ptr) : type(SEXPR_STRING) { u.sexpr_ptr = ptr; }
+		SEXPR_APPEND_ARG(const _OUT_STRING& value) : type(SEXPR_STRING) { str_value = value._String; u.symbol = value._Symbol; }
+		SEXPR_APPEND_ARG(SEXPR* ptr) : type(SEXPR_ATOM) { u.sexpr_ptr = ptr; }
 
 	private:
 		enum Type { INT, DOUBLE, STRING, LONGINT, SEXPR_STRING, SEXPR_ATOM };
@@ -173,7 +173,7 @@ namespace SEXPR
 			int int_value;
 			double dbl_value;
 			SEXPR* sexpr_ptr;
-			const _OUT_STRING* sexpr_str_value;
+			bool symbol;
 		} u;
 		std::string str_value;
 	};

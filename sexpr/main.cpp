@@ -134,7 +134,7 @@ int main(void)
 
 	std::string testty = list->AsString();
 
-	SEXPR::SEXPR_LIST* list3 = new SEXPR::SEXPR_LIST(1,2.5f,"test");
+	SEXPR::SEXPR_LIST* list3 = new SEXPR::SEXPR_LIST(SEXPR::AsSymbol("test"),1,2.5f,"test");
 
 	DWORD dw1 = GetTickCount();
 

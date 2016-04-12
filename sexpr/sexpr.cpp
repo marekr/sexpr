@@ -497,13 +497,13 @@ namespace SEXPR
 			}
 			else if (arg.type == SEXPR_APPEND_ARG::Type::SEXPR_STRING)
 			{
-				if (arg.u.sexpr_str_value->_Symbol)
+				if (arg.u.symbol)
 				{
-					AddChild(new SEXPR_SYMBOL(arg.u.sexpr_str_value->_String));
+					AddChild(new SEXPR_SYMBOL(arg.str_value));
 				}
 				else
 				{
-					AddChild(new SEXPR_STRING(arg.u.sexpr_str_value->_String));
+					AddChild(new SEXPR_STRING(arg.str_value));
 				}
 			}
 			else
