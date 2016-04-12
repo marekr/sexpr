@@ -155,15 +155,15 @@ namespace SEXPR
 		std::string str_value;
 	};
 
-	class SEXPR_APPEND_ARG {
+	class SEXPR_CHILDREN_ARG {
 		friend class SEXPR_LIST;
 	public:
-		SEXPR_APPEND_ARG(int value) : type(INT) { u.int_value = value; }
-		SEXPR_APPEND_ARG(long int value) : type(LONGINT) { u.lint_value = value; }
-		SEXPR_APPEND_ARG(double value) : type(DOUBLE) { u.dbl_value = value; }
-		SEXPR_APPEND_ARG(std::string value) : type(STRING) { str_value = value; }
-		SEXPR_APPEND_ARG(const _OUT_STRING& value) : type(SEXPR_STRING) { str_value = value._String; u.symbol = value._Symbol; }
-		SEXPR_APPEND_ARG(SEXPR* ptr) : type(SEXPR_ATOM) { u.sexpr_ptr = ptr; }
+		SEXPR_CHILDREN_ARG(int value) : type(INT) { u.int_value = value; }
+		SEXPR_CHILDREN_ARG(long int value) : type(LONGINT) { u.lint_value = value; }
+		SEXPR_CHILDREN_ARG(double value) : type(DOUBLE) { u.dbl_value = value; }
+		SEXPR_CHILDREN_ARG(std::string value) : type(STRING) { str_value = value; }
+		SEXPR_CHILDREN_ARG(const _OUT_STRING& value) : type(SEXPR_STRING) { str_value = value._String; u.symbol = value._Symbol; }
+		SEXPR_CHILDREN_ARG(SEXPR* ptr) : type(SEXPR_ATOM) { u.sexpr_ptr = ptr; }
 
 	private:
 		enum Type { INT, DOUBLE, STRING, LONGINT, SEXPR_STRING, SEXPR_ATOM };
@@ -187,7 +187,7 @@ namespace SEXPR
 		template <typename... Args>
 		SEXPR_LIST(const Args&... args) : SEXPR(SEXPR_TYPE_LIST), m_inStreamChild(0) 
 		{
-			Append(args...);
+			AddChildren(args...);
 		};
 
 		SEXPR_VECTOR m_children;
@@ -200,10 +200,10 @@ namespace SEXPR
 		}
 
 		template <typename... Args>
-		void Append(const Args&... args)
+		void AddChildren(const Args&... args)
 		{
-			SEXPR_APPEND_ARG arg_array[] = { args... };
-			doAppend(arg_array, sizeof...(Args));
+			SEXPR_CHILDREN_ARG arg_array[] = { args... };
+			doAddChildren(arg_array, sizeof...(Args));
 		}
 
 		virtual ~SEXPR_LIST();
@@ -227,7 +227,7 @@ namespace SEXPR
 	private:
 		int m_inStreamChild;
 		size_t doScan(const SEXPR_SCAN_ARG *args, size_t num_args);
-		void doAppend(const SEXPR_APPEND_ARG *args, size_t num_args);
+		void doAddChildren(const SEXPR_CHILDREN_ARG *args, size_t num_args);
 	};
 }
 

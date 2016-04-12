@@ -468,34 +468,34 @@ namespace SEXPR
 		return i;
 	}
 
-	void SEXPR_LIST::doAppend(const SEXPR_APPEND_ARG *args, size_t num_args)
+	void SEXPR_LIST::doAddChildren(const SEXPR_CHILDREN_ARG *args, size_t num_args)
 	{
 		size_t i = 0;
 		for (i = 0; i < num_args; i++)
 		{
-			const SEXPR_APPEND_ARG& arg = args[i];
+			const SEXPR_CHILDREN_ARG& arg = args[i];
 
-			if (arg.type == SEXPR_APPEND_ARG::Type::DOUBLE)
+			if (arg.type == SEXPR_CHILDREN_ARG::Type::DOUBLE)
 			{
 				AddChild(new SEXPR_DOUBLE(arg.u.dbl_value));
 			}
-			else if (arg.type == SEXPR_APPEND_ARG::Type::INT)
+			else if (arg.type == SEXPR_CHILDREN_ARG::Type::INT)
 			{
 				AddChild(new SEXPR_INTEGER(arg.u.int_value));
 			}
-			else if (arg.type == SEXPR_APPEND_ARG::Type::LONGINT)
+			else if (arg.type == SEXPR_CHILDREN_ARG::Type::LONGINT)
 			{
 				AddChild(new SEXPR_INTEGER(arg.u.lint_value));
 			}
-			else if (arg.type == SEXPR_APPEND_ARG::Type::STRING)
+			else if (arg.type == SEXPR_CHILDREN_ARG::Type::STRING)
 			{
 				AddChild(new SEXPR_STRING(arg.str_value));
 			}
-			else if (arg.type == SEXPR_APPEND_ARG::Type::SEXPR_ATOM)
+			else if (arg.type == SEXPR_CHILDREN_ARG::Type::SEXPR_ATOM)
 			{
 				AddChild(arg.u.sexpr_ptr);
 			}
-			else if (arg.type == SEXPR_APPEND_ARG::Type::SEXPR_STRING)
+			else if (arg.type == SEXPR_CHILDREN_ARG::Type::SEXPR_STRING)
 			{
 				if (arg.u.symbol)
 				{
