@@ -86,12 +86,12 @@ namespace SEXPR
         return static_cast<SEXPR_STRING const *>(this)->m_value;
     }
 
-    int SEXPR::GetInteger() const
+    int32_t SEXPR::GetInteger() const
     {
         return static_cast<int>(GetLongInteger());
     }
 
-    long long int SEXPR::GetLongInteger() const
+    int64_t SEXPR::GetLongInteger() const
     {
         if (m_type != SEXPR_TYPE_ATOM_INTEGER)
         {
@@ -215,13 +215,13 @@ namespace SEXPR
         return list;
     }
 
-    SEXPR_LIST& operator<< (SEXPR_LIST& list, long long int value)
+    SEXPR_LIST& operator<< (SEXPR_LIST& list, int64_t value)
     {
         list.AddChild(new SEXPR_INTEGER(value));
         return list;
     }
 
-    SEXPR_LIST& operator<< (SEXPR_LIST& list, int value)
+    SEXPR_LIST& operator<< (SEXPR_LIST& list, int32_t value)
     {
         list.AddChild(new SEXPR_INTEGER(value));
         return list;
@@ -274,7 +274,7 @@ namespace SEXPR
         return input;
     }
 
-    SEXPR_LIST& operator>> (SEXPR_LIST& input, int& inte)
+    SEXPR_LIST& operator>> (SEXPR_LIST& input, int32_t& inte)
     {
         SEXPR* child = input.GetChild(input.m_inStreamChild);
         if (child->IsInteger())
@@ -306,7 +306,7 @@ namespace SEXPR
         return input;
     }
 
-    SEXPR_LIST& operator>> (SEXPR_LIST& input, long long int& lint)
+    SEXPR_LIST& operator>> (SEXPR_LIST& input, int64_t& lint)
     {
         SEXPR* child = input.GetChild(input.m_inStreamChild);
         if (child->IsInteger())

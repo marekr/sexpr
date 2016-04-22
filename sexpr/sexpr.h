@@ -18,6 +18,7 @@
 #ifndef SEXPR_H_
 #define SEXPR_H_
 
+#include <cstdint>
 #include <string>
 #include <vector>
 #include "sexpr/isexprable.h"
@@ -55,8 +56,8 @@ namespace SEXPR
 		SEXPR_VECTOR const * GetChildren() const;
 		SEXPR * GetChild(size_t idx) const;
 		size_t GetNumberOfChildren() const;
-		long long int GetLongInteger() const;
-		int GetInteger() const;
+		int64_t GetLongInteger() const;
+		int32_t GetInteger() const;
 		float GetFloat() const;
 		double GetDouble() const;
 		std::string const & GetString() const;
@@ -68,9 +69,9 @@ namespace SEXPR
 
 	struct SEXPR_INTEGER : public SEXPR
 	{
-		long long int m_value;
-		SEXPR_INTEGER(long long int value) : SEXPR(SEXPR_TYPE_ATOM_INTEGER), m_value(value) {};
-		SEXPR_INTEGER(long long int value, int lineNumber) : SEXPR(SEXPR_TYPE_ATOM_INTEGER, lineNumber), m_value(value) {};
+		int64_t m_value;
+		SEXPR_INTEGER(int64_t value) : SEXPR(SEXPR_TYPE_ATOM_INTEGER), m_value(value) {};
+		SEXPR_INTEGER(int64_t value, int lineNumber) : SEXPR(SEXPR_TYPE_ATOM_INTEGER, lineNumber), m_value(value) {};
 	};
 
 	struct SEXPR_DOUBLE : public SEXPR
@@ -134,8 +135,8 @@ namespace SEXPR
 	class SEXPR_SCAN_ARG {
 		friend class SEXPR_LIST;
 	public:
-		SEXPR_SCAN_ARG(int* value) : type(INT) { u.int_value = value; }
-		SEXPR_SCAN_ARG(long int* value) : type(LONGINT) { u.lint_value = value; }
+		SEXPR_SCAN_ARG(int32_t* value) : type(INT) { u.int_value = value; }
+		SEXPR_SCAN_ARG(int64_t* value) : type(LONGINT) { u.lint_value = value; }
 		SEXPR_SCAN_ARG(double* value) : type(DOUBLE) { u.dbl_value = value; }
 		SEXPR_SCAN_ARG(std::string* value) : type(STRING) { u.str_value = value; }
 		SEXPR_SCAN_ARG(_IN_STRING& value) : type(SEXPR_STRING) { u.sexpr_str = &value; }
@@ -147,8 +148,8 @@ namespace SEXPR
 		enum Type { INT, DOUBLE, STRING, LONGINT, STRING_COMP, SEXPR_STRING};
 		Type type;
 		union {
-			long int* lint_value;
-			int* int_value;
+			int64_t* lint_value;
+			int32_t* int_value;
 			double* dbl_value;
 			std::string* str_value;
 			_IN_STRING* sexpr_str;
@@ -160,8 +161,8 @@ namespace SEXPR
 	class SEXPR_CHILDREN_ARG {
 		friend class SEXPR_LIST;
 	public:
-		SEXPR_CHILDREN_ARG(int value) : type(INT) { u.int_value = value; }
-		SEXPR_CHILDREN_ARG(long long int value) : type(LONGINT) { u.lint_value = value; }
+		SEXPR_CHILDREN_ARG(int32_t value) : type(INT) { u.int_value = value; }
+		SEXPR_CHILDREN_ARG(int64_t value) : type(LONGINT) { u.lint_value = value; }
 		SEXPR_CHILDREN_ARG(double value) : type(DOUBLE) { u.dbl_value = value; }
 		SEXPR_CHILDREN_ARG(std::string value) : type(STRING) { str_value = value; }
 		SEXPR_CHILDREN_ARG(const _OUT_STRING& value) : type(SEXPR_STRING) { str_value = value._String; u.symbol = value._Symbol; }
@@ -171,8 +172,8 @@ namespace SEXPR
 		enum Type { INT, DOUBLE, STRING, LONGINT, SEXPR_STRING, SEXPR_ATOM };
 		Type type;
 		union {
-			long long int lint_value;
-			int int_value;
+			int64_t lint_value;
+			int32_t int_value;
 			double dbl_value;
 			SEXPR* sexpr_ptr;
 			bool symbol;
@@ -212,8 +213,8 @@ namespace SEXPR
 
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, double value);
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, float value);
-		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, long long int value);
-		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, int value);
+		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, int64_t value);
+		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, int32_t value);
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, std::string value);
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, const _OUT_STRING setting);
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, const ISEXPRABLE& obj);
@@ -221,8 +222,8 @@ namespace SEXPR
 		friend SEXPR_LIST& operator<< (SEXPR_LIST& list, SEXPR* obj);
 		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, ISEXPRABLE& obj);
 		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, std::string& str);
-		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, int& inte);
-		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, long long int& inte);
+		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, int32_t& inte);
+		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, int64_t& inte);
 		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, float& inte);
 		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, double& inte);
 		friend SEXPR_LIST& operator>> (SEXPR_LIST& input, const _IN_STRING is);
