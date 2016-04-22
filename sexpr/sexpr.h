@@ -161,7 +161,7 @@ namespace SEXPR
 		friend class SEXPR_LIST;
 	public:
 		SEXPR_CHILDREN_ARG(int value) : type(INT) { u.int_value = value; }
-		SEXPR_CHILDREN_ARG(long int value) : type(LONGINT) { u.lint_value = value; }
+		SEXPR_CHILDREN_ARG(long long int value) : type(LONGINT) { u.lint_value = value; }
 		SEXPR_CHILDREN_ARG(double value) : type(DOUBLE) { u.dbl_value = value; }
 		SEXPR_CHILDREN_ARG(std::string value) : type(STRING) { str_value = value; }
 		SEXPR_CHILDREN_ARG(const _OUT_STRING& value) : type(SEXPR_STRING) { str_value = value._String; u.symbol = value._Symbol; }
@@ -171,7 +171,7 @@ namespace SEXPR
 		enum Type { INT, DOUBLE, STRING, LONGINT, SEXPR_STRING, SEXPR_ATOM };
 		Type type;
 		union {
-			long int lint_value;
+			long long int lint_value;
 			int int_value;
 			double dbl_value;
 			SEXPR* sexpr_ptr;
