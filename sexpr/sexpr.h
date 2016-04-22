@@ -24,6 +24,9 @@
 #include "sexpr/isexprable.h"
 #include "sexpr/sexpr_exception.h"
 
+using std::int32_t;
+using std::int64_t;
+
 namespace SEXPR
 {
 	enum SEXPR_TYPE
