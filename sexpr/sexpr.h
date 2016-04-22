@@ -139,7 +139,9 @@ namespace SEXPR
 		SEXPR_SCAN_ARG(double* value) : type(DOUBLE) { u.dbl_value = value; }
 		SEXPR_SCAN_ARG(std::string* value) : type(STRING) { u.str_value = value; }
 		SEXPR_SCAN_ARG(_IN_STRING& value) : type(SEXPR_STRING) { u.sexpr_str = &value; }
+		SEXPR_SCAN_ARG(const std::string* value) : type(STRING_COMP) { str_value = *value; }
 		SEXPR_SCAN_ARG(std::string value) : type(STRING_COMP) { str_value = value; }
+		SEXPR_SCAN_ARG(const char* value) : type(STRING_COMP) { str_value = value; }
 
 	private:
 		enum Type { INT, DOUBLE, STRING, LONGINT, STRING_COMP, SEXPR_STRING};
