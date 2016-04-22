@@ -169,6 +169,7 @@ namespace SEXPR
 		SEXPR_CHILDREN_ARG(int64_t value) : type(LONGINT) { u.lint_value = value; }
 		SEXPR_CHILDREN_ARG(double value) : type(DOUBLE) { u.dbl_value = value; }
 		SEXPR_CHILDREN_ARG(std::string value) : type(STRING) { str_value = value; }
+		SEXPR_CHILDREN_ARG(const char* value) : type(STRING) { str_value = value; }
 		SEXPR_CHILDREN_ARG(const _OUT_STRING& value) : type(SEXPR_STRING) { str_value = value._String; u.symbol = value._Symbol; }
 		SEXPR_CHILDREN_ARG(SEXPR* ptr) : type(SEXPR_ATOM) { u.sexpr_ptr = ptr; }
 
