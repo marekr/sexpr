@@ -38,7 +38,7 @@ namespace SEXPR
     {
         if (m_type != SEXPR_TYPE_LIST)
         {
-            throw new INVALID_TYPE_EXCEPTION("SEXPR is not a list type!");
+            throw INVALID_TYPE_EXCEPTION("SEXPR is not a list type!");
         }
 
         return &static_cast<SEXPR_LIST const *>(this)->m_children;
@@ -48,7 +48,7 @@ namespace SEXPR
     {
         if (m_type != SEXPR_TYPE_LIST)
         {
-            throw new INVALID_TYPE_EXCEPTION("SEXPR is not a list type!");
+            throw INVALID_TYPE_EXCEPTION("SEXPR is not a list type!");
         }
 
         return static_cast<SEXPR_LIST const *>(this)->m_children[idx];
@@ -58,7 +58,7 @@ namespace SEXPR
     {
         if (m_type != SEXPR_TYPE_LIST)
         {
-            throw new INVALID_TYPE_EXCEPTION("SEXPR is not a list type!");
+            throw INVALID_TYPE_EXCEPTION("SEXPR is not a list type!");
         }
 
         SEXPR_LIST* list = static_cast<SEXPR_LIST *>(this);
@@ -70,7 +70,7 @@ namespace SEXPR
     {
         if (m_type != SEXPR_TYPE_LIST)
         {
-            throw new INVALID_TYPE_EXCEPTION("SEXPR is not a list type!");
+            throw INVALID_TYPE_EXCEPTION("SEXPR is not a list type!");
         }
 
         return static_cast<SEXPR_LIST const *>(this)->m_children.size();
@@ -80,7 +80,7 @@ namespace SEXPR
     {
         if (m_type != SEXPR_TYPE_ATOM_STRING)
         {
-            throw new INVALID_TYPE_EXCEPTION("SEXPR is not a string type!");
+            throw INVALID_TYPE_EXCEPTION("SEXPR is not a string type!");
         }
 
         return static_cast<SEXPR_STRING const *>(this)->m_value;
@@ -95,7 +95,7 @@ namespace SEXPR
     {
         if (m_type != SEXPR_TYPE_ATOM_INTEGER)
         {
-            throw new INVALID_TYPE_EXCEPTION("SEXPR is not a integer type!");
+            throw INVALID_TYPE_EXCEPTION("SEXPR is not a integer type!");
         }
 
         return static_cast<SEXPR_INTEGER const *>(this)->m_value;
@@ -115,7 +115,7 @@ namespace SEXPR
         }
         else
         {
-            throw new INVALID_TYPE_EXCEPTION("SEXPR is not a double type!");
+            throw INVALID_TYPE_EXCEPTION("SEXPR is not a double type!");
         }
     }
 
@@ -128,7 +128,7 @@ namespace SEXPR
     {
         if (m_type != SEXPR_TYPE_ATOM_SYMBOL)
         {
-            throw new INVALID_TYPE_EXCEPTION("SEXPR is not a symbol type!");
+            throw INVALID_TYPE_EXCEPTION("SEXPR is not a symbol type!");
         }
 
         return static_cast<SEXPR_SYMBOL const *>(this)->m_value;
@@ -139,7 +139,7 @@ namespace SEXPR
     {
         if (m_type != SEXPR_TYPE_LIST)
         {
-            throw new INVALID_TYPE_EXCEPTION("SEXPR is not a list type!");
+            throw INVALID_TYPE_EXCEPTION("SEXPR is not a list type!");
         }
 
         return static_cast<SEXPR_LIST*>(this);
@@ -284,7 +284,7 @@ namespace SEXPR
         }
         else
         {
-            throw new std::invalid_argument("SEXPR is not a integer type!");
+            throw std::invalid_argument("SEXPR is not a integer type!");
         }
 
         return input;
@@ -300,7 +300,7 @@ namespace SEXPR
         }
         else
         {
-            throw new std::invalid_argument("SEXPR is not a string type!");
+            throw std::invalid_argument("SEXPR is not a string type!");
         }
 
         return input;
@@ -316,7 +316,7 @@ namespace SEXPR
         }
         else
         {
-            throw new std::invalid_argument("SEXPR is not a long integer type!");
+            throw std::invalid_argument("SEXPR is not a long integer type!");
         }
 
         return input;
@@ -332,7 +332,7 @@ namespace SEXPR
         }
         else
         {
-            throw new std::invalid_argument("SEXPR is not a float type!");
+            throw std::invalid_argument("SEXPR is not a float type!");
         }
 
         return input;
@@ -348,7 +348,7 @@ namespace SEXPR
         }
         else
         {
-            throw new std::invalid_argument("SEXPR is not a double type!");
+            throw std::invalid_argument("SEXPR is not a double type!");
         }
 
         return input;
@@ -366,7 +366,7 @@ namespace SEXPR
             }
             else
             {
-                throw new std::invalid_argument("SEXPR is not a symbol type!");
+                throw std::invalid_argument("SEXPR is not a symbol type!");
             }
         }
         else
@@ -378,7 +378,7 @@ namespace SEXPR
             }
             else
             {
-                throw new std::invalid_argument("SEXPR is not a string type!");
+                throw std::invalid_argument("SEXPR is not a string type!");
             }
         }
 
@@ -456,7 +456,7 @@ namespace SEXPR
 				}
 				else
 				{
-					throw new std::invalid_argument("unsupported argument type, this shouldn't have happened");
+					throw std::invalid_argument("unsupported argument type, this shouldn't have happened");
 				}
 			}
 			catch (INVALID_TYPE_EXCEPTION)
@@ -508,7 +508,7 @@ namespace SEXPR
 			}
 			else
 			{
-				throw new std::invalid_argument("unexpected argument type, this shouldn't have happened");
+				throw std::invalid_argument("unexpected argument type, this shouldn't have happened");
 			}
 		}
 	}
