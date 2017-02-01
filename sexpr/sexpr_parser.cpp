@@ -94,6 +94,13 @@ namespace SEXPR
                 SEXPR_LIST* list = new SEXPR_LIST(m_lineNumber);
                 while (it != aString.end() && *it != ')')
                 {
+					//there may be newlines in between atoms of a list, so detect these here
+					if (*it == '\n')
+					{
+						m_lineNumber++;
+						m_lineOffset = 0;
+					}
+
                     if (whitespaceCharacters.find(*it) != std::string::npos)
                     {
                         std::advance(it, 1);
